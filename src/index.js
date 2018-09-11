@@ -24,6 +24,8 @@ render(
         <Route exact path='/payment'
           render={() => {
             let state = store.getState()
+
+            console.log("state.authentication.loggedIn :", state.authentication.loggedIn);
             if (state.authentication.loggedIn) {
               return <Order />
             }

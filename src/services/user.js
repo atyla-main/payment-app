@@ -1,4 +1,5 @@
 import fetch from 'cross-fetch'
+import { history } from '../helpers/history'
 
 export const userService = {
   login,
@@ -23,7 +24,7 @@ function login(username, password) {
     })
   }
 
-  return fetch('http://localhost:3300/login', requestOptions)
+  return fetch(`${process.env.REACT_APP_EXTERNAL_URL}login`, requestOptions)
     .then(handleResponse)
     .then(user => {
       if (user.data && user.data.token) {
@@ -36,16 +37,14 @@ function login(username, password) {
 
 function logout() {
   localStorage.removeItem('user');
+  history.push('/register');
 }
 
 function handleResponse(response) {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
-      if (response.status === 401) {
-        logout();
-        // window.location.reload(true);
-      }
+      if (response.status === 401) { logout(); }
 
       const error = (data && data.message) || response.statusText;
       return Promise.reject(error);
@@ -70,6 +69,6 @@ function register(user) {
       password: `${user.password}`
     })
   }
-  return fetch('http://localhost:3300/register-payment', requestOptions)
+  return fetch(`${process.env.REACT_APP_EXTERNAL_URL}register-payment`, requestOptions)
     .then(handleResponse)
 }

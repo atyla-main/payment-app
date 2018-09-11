@@ -6,6 +6,7 @@ import { authentication } from './authentication'
 import { registration } from './registration'
 import { updateOrder, storedOrderPrice } from './updateOrder'
 import { postOrder } from './postOrder'
+import { validateOrder } from './validateOrder'
 
 export default combineReducers({
   calculatorInfos,
@@ -15,5 +16,6 @@ export default combineReducers({
   registration,
   updateOrder,
   storedOrderPrice,
-  postOrder
+  postOrder,
+  validateOrder
 })

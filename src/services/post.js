@@ -1,16 +1,12 @@
 import fetch from 'cross-fetch'
 import { authHeader } from '../helpers/authHeader'
+import { history } from '../helpers/history'
 
 export const postService = {
   post
 }
 
 function post(path, body) {
-  console.log("IN UPDATE");
-  console.log("MODEL:", path);
-  console.log("BODY:", body);
-  console.log("BODY STRING:", JSON.stringify(body));
-  console.log("HEADER:", authHeader());
   const requestOptions = {
     method: 'POST',
     headers: authHeader(),
@@ -18,8 +14,7 @@ function post(path, body) {
   }
 
 
-  console.log("REQUEST OPTSION:", requestOptions);
-  return fetch(`http://localhost:3300/api/${path}`, requestOptions)
+  return fetch(`${process.env.REACT_APP_EXTERNAL_URL}api/${path}`, requestOptions)
     .then(handleResponse)
     .then(payload => {
       return payload
@@ -27,22 +22,13 @@ function post(path, body) {
 }
 
 function handleResponse(response) {
-  if (response.status === 401) {
-    logout();
-    //window.location.reload(true);
-  }
-
   return response.text().then(text => {
-    const data = text && JSON.parse(text);
-    console.log("REPONSE:", response);
+    const data = text && JSON.parse(text)
     if (!response.ok) {
-      if (response.status === 401) {
-        logout();
-        window.location.reload(true);
-      }
+      if (response.status === 401) { logout() }
 
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
+      const error = (data && data.message) || response.statusText
+      return Promise.reject(error)
     }
 
     return data;
@@ -50,5 +36,6 @@ function handleResponse(response) {
 }
 
 function logout() {
-  localStorage.removeItem('user');
+  localStorage.removeItem('user')
+  history.push('/register')
 }

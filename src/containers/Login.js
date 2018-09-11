@@ -43,12 +43,12 @@ class Login extends Component {
   }
 
   render() {
-    const { loggingIn, loggedIn } = this.props
+    const { loggingIn, loggedIn, authUser } = this.props
     const { user, submitted } = this.state
 
     return (
       <div>
-        { loggedIn ?
+        { loggedIn && authUser ?
           <div>LoggedIn</div>
           :
           <LoginForm
@@ -64,10 +64,11 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
-  const { loggingIn, loggedIn } = state.authentication
+  const { loggingIn, loggedIn, user } = state.authentication
   return {
     loggingIn,
-    loggedIn
+    loggedIn,
+    authUser: user
   }
 }
 

@@ -20,7 +20,11 @@ export function authentication(state = initialState, action) {
     case userConstants.LOGIN_FAILURE:
       return state
     case userConstants.LOGOUT:
-      return state
+      return {
+        ...state,
+        loggedIn: false,
+        user: null
+      }
     case userConstants.USER_ALREADY_LOGGEDIN:
       return state
     default:

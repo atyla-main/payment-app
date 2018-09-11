@@ -27,7 +27,7 @@ class Calculator extends Component {
     const { ico, merchant } = query
 
     const userAgent = navigator.userAgent
-    let url = `/ico-current-info/${ico}?merchant=${merchant}&userAgent=${userAgent}`
+    let url = `ico-current-info/${ico}?merchant=${merchant}&userAgent=${userAgent}`
     dispatch(getCalculatorInfos(url))
   }
 

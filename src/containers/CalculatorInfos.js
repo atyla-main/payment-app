@@ -12,7 +12,7 @@ export function calculatorMiddleware({dispatch}) {
 
         dispatch({ type: payload.PENDING })
 
-        return fetch(`http://localhost:3300${params}`)
+        return fetch(`${process.env.REACT_APP_EXTERNAL_URL}${params}`)
           .then(response => response.json())
           .then(json => {
             dispatch({type: payload.SUCCESS, payload: json})
